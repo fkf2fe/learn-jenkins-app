@@ -26,7 +26,7 @@ pipeline {
                 sh '''
                     echo "Test stage"
                     test -f build/index.html
-                    rpm test
+                    npm test
                 '''
             }
         }
