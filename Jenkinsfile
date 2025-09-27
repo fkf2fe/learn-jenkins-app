@@ -90,6 +90,13 @@ pipeline {
                 '''
             }
         }        
+        stage("Approve") {
+            steps {
+                timeout(time: 30, unit: 'MINUTES') {
+                    input message: 'Ready to deploy?', cancel: 'NO',  ok: 'YES'
+                }
+            }
+        }
         stage('Deploy-prod') {
             agent {
                 docker {
