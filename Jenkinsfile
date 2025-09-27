@@ -94,15 +94,15 @@ pipeline {
             }
         }        
         stage("Staging-E2E") {
-            environment {
-                CI_ENVIRONMENT_URL = "${env.STAGING_URL}"
-            }
             agent {
                 docker {
                     image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
                     reuseNode true
                 }
             }
+            environment {
+                CI_ENVIRONMENT_URL = "${env.STAGING_URL}"
+            }            
             steps {
                 sh '''
                     npx playwright test --reporter=html
@@ -140,15 +140,15 @@ pipeline {
             }
         }
         stage("Prod-E2E") {
-            environment {
-                CI_ENVIRONMENT_URL = 'https://fancy-gaufre-21cfae.netlify.app'
-            }
             agent {
                 docker {
                     image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
                     reuseNode true
                 }
             }
+            environment {
+                CI_ENVIRONMENT_URL = 'https://fancy-gaufre-21cfae.netlify.app'
+            }            
             steps {
                 sh '''
                     npx playwright test --reporter=html
