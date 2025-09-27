@@ -105,6 +105,7 @@ pipeline {
             }            
             steps {
                 sh '''
+                    echo "run E2E test on ${env.STAGING_URL}"
                     npx playwright test --reporter=html
                 '''
             }
