@@ -4,10 +4,11 @@ pipeline {
     environment {
         NETLIFY_SITE_ID = 'ec75396f-cb50-49b0-9ef7-5f0531a02f18'
         NETLIFY_AUTH_TOKEN = credentials('netlify-token')
+        REACT_APP_VERSION = '1.2.3'
     }
 
     stages {
-        /*stage('Build') {
+        stage('Build') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -25,7 +26,7 @@ pipeline {
                     ls -la
                 '''
             }
-        }*/
+        }
         stage("run-tests") {
             parallel {
                 stage("Test") {
