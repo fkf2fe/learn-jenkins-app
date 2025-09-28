@@ -89,8 +89,12 @@ pipeline {
                     node_modules/.bin/netlify deploy --dir=build --json > deploy-output.json
                 '''
                 script {
-                    env.STAGING_URL = sh(script: "node_modules/.bin/node-jq -r '.deploy_url' deploy-output.json", returnStdout: true).trim()
+                    env.STAGING_URL = sh(script: "node_modules/.bin/node-jq -r '.deploy_url' deploy-output.json", returnStdout: true).trim()   
                 }
+                // sh 'echo "deployed to ${env.STAGING_URL}"' won't work - isn't expanded before passing to shell. env-var itself isn't known to shell environment
+                sh "echo \"(from shell): deployed to ${env.STAGING_URL}\""  // this works instead - expansion, due to double quotes
+                echo "(from jenkins): deployed to ${env.STAGING_URL}"
+
             }
         }        
         stage("Staging-E2E") {
